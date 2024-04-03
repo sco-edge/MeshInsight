@@ -1,6 +1,9 @@
 # MeshInsight
 
 Install 'MeshInsight'
+=> . ./install.sh
+
+requirements.txt에 해당하는 파일이 존재하여야 install 쉘 스크립트를 실행했을 때 일발적으로 설치가 가능함.
 
 -   요구사항
     -   Python (Version >= 3.7)
