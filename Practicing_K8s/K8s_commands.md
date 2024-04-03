@@ -17,3 +17,5 @@
 ### remove docker container 'simple-node'
 
 -   docker rm 'simple-node'
+-   docker rmi <태그이름>
+-   docker rmi <이미지ID>
