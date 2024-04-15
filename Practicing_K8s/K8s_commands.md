@@ -70,3 +70,7 @@
 ### Look up Pod's container file list
 
 -   kubectl exec {pod's name}
+
+### Access to Pod's container
+
+-   kubectl exec -it {pod's name}
