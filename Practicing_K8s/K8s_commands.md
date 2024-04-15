@@ -54,3 +54,7 @@
 ### Look Up all types
 
 -   kubectl get all
+
+### Change format of printing pods
+
+-   kubectl get pod -o json
