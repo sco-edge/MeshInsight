@@ -46,3 +46,7 @@
 ### Look Up pod
 
 -   kubectl get pod
+
+### Look Up types of pods
+
+-   kubectl get pod,service
