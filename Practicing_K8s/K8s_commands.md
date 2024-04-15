@@ -62,3 +62,7 @@
 ### Look up Resources more detail
 
 -   kubectl describe pod/{pod's name}
+
+### Look up Pod's Log
+
+-   kubectl logs {pod's name}
