@@ -66,3 +66,7 @@
 ### Look up Pod's Log
 
 -   kubectl logs {pod's name}
+
+### Look up Pod's container file list
+
+-   kubectl exec {pod's name}
