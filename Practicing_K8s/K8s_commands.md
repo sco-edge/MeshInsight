@@ -58,3 +58,7 @@
 ### Change format of printing pods
 
 -   kubectl get pod -o json
+
+### Look up Resources more detail
+
+-   kubectl describe pod/{pod's name}
