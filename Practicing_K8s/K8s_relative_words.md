@@ -9,3 +9,7 @@
 ### kubelet
 
 -   kubelet lets container to run in pod. If control plain request work in node then kubelet works
+
+### container orchestration tools
+
+-   K8s, Docker Swarm, Apache Mesos
