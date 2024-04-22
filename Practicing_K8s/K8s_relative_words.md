@@ -5,3 +5,7 @@
 ### egress
 
 -   traffic move from inner server -> outer
+
+### kubelet
+
+-   kubelet lets container to run in pod. If control plain request work in node then kubelet works
