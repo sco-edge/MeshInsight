@@ -1,6 +1,6 @@
 mTLS(mutual TLS)
 
--   Upgrades version of TLS(SSL)
+-   Upgraded version of TLS(SSL)
 
 -   Automatically applied when developer uses service mesh
 
@@ -8,3 +8,4 @@ mTLS(mutual TLS)
 -   mTLS(server <=> client)
 
 -   Visiting all sidecars(proxy) cause low performance.
+-   When microservice A(with mTLS) needs to communicate with microservice B(non mTLS) should communicate with normal text(non secure)
