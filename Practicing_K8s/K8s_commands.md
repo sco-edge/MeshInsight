@@ -74,3 +74,8 @@
 ### Access to Pod's container
 
 -   kubectl exec -it {pod's name}
+
+### Delete Pod
+
+-   kubectl delete pods/{pod's name}
+-   kubectl delete -f {pod's name}
