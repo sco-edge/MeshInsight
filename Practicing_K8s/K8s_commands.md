@@ -42,6 +42,7 @@
 ### DELETE LABEL 'app'
 
 -   kubectl label pod/my-pod app-
+    ------------------POD------------------
 
 ### Look Up pod
 
