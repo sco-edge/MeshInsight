@@ -96,6 +96,10 @@
 ### delete
 
 -   kubectl delete -f obj.yaml
+
+### confirm pods, services
+
+-   kubectl get pods, services
     ----------Label & Annotation-----------
 
 -   kubectl label pods bar color = red
