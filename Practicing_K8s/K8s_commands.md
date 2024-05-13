@@ -85,6 +85,10 @@
 
 -   kubectl config get-contexts
 
+### change name space 'mystuff => my-context'
+
+-   kubectl config set-context my context -namespace=mystuff
+
 ----------Label & Annotation-----------
 
 -   kubectl label pods bar color = red
