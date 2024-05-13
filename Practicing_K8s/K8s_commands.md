@@ -89,6 +89,13 @@
 
 -   kubectl config set-context my context -namespace=mystuff
 
-----------Label & Annotation-----------
+### copy container's file
+
+-   kubectl cp <pod's name>:</path/to/remote/lib> </path/to/local/file>
+
+### delete
+
+-   kubectl delete -f obj.yaml
+    ----------Label & Annotation-----------
 
 -   kubectl label pods bar color = red
