@@ -81,6 +81,10 @@
 -   kubectl delete pods/{pod's name}
 -   kubectl delete -f {pod's name}
 
+### config context
+
+-   kubectl config get-contexts
+
 ----------Label & Annotation-----------
 
 -   kubectl label pods bar color = red
