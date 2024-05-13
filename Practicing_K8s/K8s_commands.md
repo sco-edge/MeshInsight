@@ -80,3 +80,7 @@
 
 -   kubectl delete pods/{pod's name}
 -   kubectl delete -f {pod's name}
+
+----------Label & Annotation-----------
+
+-   kubectl label pods bar color = red
