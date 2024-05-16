@@ -28,10 +28,10 @@ kuard 1/1 Running 0 2m44s
 
 junho@junho-System-Product-Name:~$ sudo kubectl logs kuard
 2024/05/16 04:37:52 Starting kuard version: v0.10.0-blue
-2024/05/16 04:37:52 ****************\*\*****************\*\*****************\*\*****************
+2024/05/16 04:37:52 **\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***
 2024/05/16 04:37:52 _ WARNING: This server may expose sensitive
 2024/05/16 04:37:52 _ and secret information. Be careful.
-2024/05/16 04:37:52 ****************\*\*****************\*\*****************\*\*****************
+2024/05/16 04:37:52 **\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***\*\***\*\***\*\*\*\***\*\***
 2024/05/16 04:37:52 Config:
 {
 "address": ":8080",
@@ -83,3 +83,96 @@ failureThreshold: 3
 ports: - containerPort: 8080
 name: http
 protocol: TCP
+
+nano kuard-pod-resreq.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+containers: - image: gcr.io/kuar-demo/kuard-amd64:blue
+name: kuard
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+ports: - containerPort: 8080
+name: http
+protocol: TCP
+
+nano kuard-pod-reslim.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+containers: - image: gcr.io/kuar-demo/kuard-amd64:blue
+name: kuard
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+limits:
+cpu: "1000m"
+memory: "256Mi"
+ports: - containerPort: 8080
+name: http
+protocol: TCP
+
+nano kuard-pod-vol.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+volumes: - name: "kuard-data"
+hostPath:
+path: "/var/lib/kuard"
+containers: - image: gcr.io/kuar-demo/kuard-amd64:blue
+name: kuard
+volumeMounts: - mountPath: "/data"
+name: "kuard-data"
+ports: - containerPort: 8080
+name: http
+protocol: TCP
+
+nano kuard-pod-full.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+volumes: - name: "kuard-data"
+nfs:
+server: my.nfs.server.local
+path: "/exports"
+containers: - image: gcr.io/kuar-demo/kuard-amd64:blue
+name: kuard
+ports: - containerPort: 8080
+name: http
+protocolL: TCP
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+limits:
+cpu: "1000m"
+memory: "256Mi"
+volumeMounts: - mountPath: "/data"
+name: "kuard-data"
+livenessProbe:
+httpGet:
+path: /healthy
+port:8080
+initialDelaySeconds: 5
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3
+readinessProbe:
+httpGet:
+path /ready
+port:8080
+initialDelaySeconds: 30
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3
