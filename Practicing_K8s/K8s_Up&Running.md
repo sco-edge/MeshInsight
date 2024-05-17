@@ -243,3 +243,31 @@ NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
 alpaca-prod LoadBalancer 10.96.231.212 <pending> 8080:30945/TCP 3h58m
 bandicoot-prod ClusterIP 10.96.199.5 <none> 8080/TCP 3h52m
 kubernetes ClusterIP 10.96.0.1 <none> 443/TCP 7d2h
+
+junho@junho-System-Product-Name:~$ sudo kubectl describe endpoints alpaca-prod
+Name: alpaca-prod
+Namespace: default
+Labels: app=alpaca-prod
+Annotations: endpoints.kubernetes.io/last-change-trigger-time: 2024-05-17T01:45:25Z
+Subsets:
+Addresses: 10.244.0.2,10.244.0.3,10.244.0.4
+NotReadyAddresses: <none>
+Ports:
+Name Port Protocol
+---- ---- --------
+<unset> 8080 TCP
+
+Events: <none>
+
+junho@junho-System-Product-Name:~$ sudo kubectl get endpoints alpaca-prod --watch
+NAME ENDPOINTS AGE
+alpaca-prod 10.244.0.2:8080,10.244.0.3:8080,10.244.0.4:8080 4h34m
+
+junho@junho-System-Product-Name:~$ sudo kubectl get endpoints alpaca-prod --watch
+NAME ENDPOINTS AGE
+alpaca-prod 10.244.0.2:8080,10.244.0.3:8080,10.244.0.4:8080 4h34m
+alpaca-prod 10.244.0.3:8080,10.244.0.4:8080 4h36m
+alpaca-prod <none> 4h36m
+alpaca-prod 10.244.0.15:8080 4h36m
+alpaca-prod 10.244.0.15:8080,10.244.0.17:8080 4h37m
+alpaca-prod 10.244.0.15:8080,10.244.0.16:8080,10.244.0.17:8080 4h37m
