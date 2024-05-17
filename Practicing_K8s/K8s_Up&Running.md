@@ -176,3 +176,70 @@ initialDelaySeconds: 30
 timeoutSeconds: 1
 periodSeconds: 10
 failureThreshold: 3
+
+junho@junho-System-Product-Name:~$ sudo kubectl run alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue -- replicas=2 --labels="ver=1,app=alpaca,env-prod"
+pod/alpaca-prod created
+
+junho@junho-System-Product-Name:~$ sudo kubectl run alpaca-test --image=gcr.io/kuar-demo/kuard-amd64:green -- replicas=1 --labels="ver=2,app=alpaca,env=test"
+pod/alpaca-test created
+
+junho@junho-System-Product-Name:~$ sudo kubectl run bandicoot-prod --image=gcr.io/kuar-demo/kuard-amd64:green -- replicias=2 --labels="ver-2,app=bandicoot,env=prod"
+pod/bandicoot-pord created
+
+junho@junho-System-Product-Name:~$ sudo kubectl run bandicoot-staging --image=gcr.io/kuar-demo/kuard-amd64:green -- replicias=1 --labels="ver-2,app=bandicoot,env=staging"
+pod/bandicoot-staging created
+
+junho@junho-System-Product-Name:~$ sudo kubectl get pods --show-labels
+NAME READY STATUS RESTARTS AGE LABELS
+bandicoot-staging 0/1 CrashLoopBackOff 9 (4m21s ago) 25m run=bandicoot-staging
+kuard 0/1 CrashLoopBackOff 6 (2m31s ago) 8m20s run=kuard
+test 0/1 CrashLoopBackOff 12 (3m2s ago) 39m run=test
+
+junho@junho-System-Product-Name:~$ sudo kubectl create deployment alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue --port=8080
+deployment.apps/alpaca-prod created
+
+junho@junho-System-Product-Name:~$ sudo kubectl scale deployment alpaca-prod --replicas 3
+deployment.apps/alpaca-prod scaled
+
+junho@junho-System-Product-Name:~$ sudo kubectl expose deployment alpaca-prod
+service/alpaca-prod exposed
+
+junho@junho-System-Product-Name:~$ sudo kubectl create deployment bandicoot-prod --image=gcr.io/kuar-demo/kuard-amd64:green --port=8080
+deployment.apps/bandicoot-prod created
+
+junho@junho-System-Product-Name:~$ sudo kubectl scale deployment bandicoot-prod --replicas 2
+deployment.apps/bandicoot-prod scaled
+
+junho@junho-System-Product-Name:~$ sudo kubectl expose deployment bandicoot-prod
+service/bandicoot-prod exposed
+
+junho@junho-System-Product-Name:~$ sudo kubectl get services -o wide
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE SELECTOR
+alpaca-prod ClusterIP 10.96.231.212 <none> 8080/TCP 7m11s app=alpaca-prod
+bandicoot-prod ClusterIP 10.96.199.5 <none> 8080/TCP 96s app=bandicoot-prod
+kubernetes ClusterIP 10.96.0.1 <none> 443/TCP 6d22h <none>
+
+junho@junho-System-Product-Name:~$ sudo kubectl describe service alpaca-prod
+Name: alpaca-prod
+Namespace: default
+Labels: app=alpaca-prod
+Annotations: <none>
+Selector: app=alpaca-prod
+Type: NodePort
+IP Family Policy: SingleStack
+IP Families: IPv4
+IP: 10.96.231.212
+IPs: 10.96.231.212
+Port: <unset> 8080/TCP
+TargetPort: 8080/TCP
+NodePort: <unset> 30945/TCP
+Endpoints: 10.244.0.2:8080,10.244.0.3:8080,10.244.0.4:8080
+Session Affinity: None
+External Traffic Policy: Cluster
+Events: <none>
+
+junho@junho-System-Product-Name:~$ sudo kubectl get services
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
+alpaca-prod LoadBalancer 10.96.231.212 <pending> 8080:30945/TCP 3h58m
+bandicoot-prod ClusterIP 10.96.199.5 <none> 8080/TCP 3h52m
+kubernetes ClusterIP 10.96.0.1 <none> 443/TCP 7d2h
