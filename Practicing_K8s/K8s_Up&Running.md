@@ -254,7 +254,9 @@ Addresses: 10.244.0.2,10.244.0.3,10.244.0.4
 NotReadyAddresses: <none>
 Ports:
 Name Port Protocol
----- ---- --------
+
+---
+
 <unset> 8080 TCP
 
 Events: <none>
@@ -271,3 +273,52 @@ alpaca-prod <none> 4h36m
 alpaca-prod 10.244.0.15:8080 4h36m
 alpaca-prod 10.244.0.15:8080,10.244.0.17:8080 4h37m
 alpaca-prod 10.244.0.15:8080,10.244.0.16:8080,10.244.0.17:8080 4h37m
+
+junho@junho-System-Product-Name:~$ sudo kubectl get pods -o wide --show-labels
+NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES LABELS
+alpaca-prod-7786f5894c-dbnfn 1/1 Running 0 4m24s 10.244.0.16 kind-control-plane <none> <none> app=alpaca-prod,pod-template-hash=7786f5894c
+alpaca-prod-7786f5894c-ddrv8 1/1 Running 0 4m45s 10.244.0.15 kind-control-plane <none> <none> app=alpaca-prod,pod-template-hash=7786f5894c
+alpaca-prod-7786f5894c-m5ltf 1/1 Running 0 4m24s 10.244.0.17 kind-control-plane <none> <none> app=alpaca-prod,pod-template-hash=7786f5894c
+bandicoot-prod 0/1 CrashLoopBackOff 67 (16s ago) 4h57m 10.244.0.11 kind-control-plane <none> <none> run=bandicoot-prod
+bandicoot-prod-79f7456fbc-9rnrd 1/1 Running 1 (98m ago) 4h39m 10.244.0.13 kind-control-plane <none> <none> app=bandicoot-prod,pod-template-hash=79f7456fbc
+bandicoot-prod-79f7456fbc-pdtmf 1/1 Running 1 (98m ago) 4h37m 10.244.0.14 kind-control-plane <none> <none> app=bandicoot-prod,pod-template-hash=79f7456fbc
+bandicoot-staging 0/1 CrashLoopBackOff 268 (16s ago) 22h 10.244.0.9 kind-control-plane <none> <none> run=bandicoot-staging
+kuard 0/1 CrashLoopBackOff 264 (68s ago) 21h 10.244.0.12 kind-control-plane <none> <none> run=kuard
+test 0/1 CrashLoopBackOff 270 (43s ago) 22h 10.244.0.10 kind-control-plane <none> <none> run=test
+
+junho@junho-System-Product-Name:~$ sudo kubectl get -n projectcontour service envoy -o wide
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE SELECTOR
+envoy LoadBalancer 10.96.139.89 <pending> 80:30537/TCP,443:32329/TCP 3m57s app=envoy
+
+junho@junho-System-Product-Name:~$ sudo kubectl get services -o wide
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE SELECTOR
+alpaca ClusterIP 10.96.18.15 <none> 8080/TCP 77s app=alpaca
+alpaca-prod LoadBalancer 10.96.231.212 <pending> 8080:30945/TCP 8h app=alpaca-prod
+bandicoot ClusterIP 10.96.172.29 <none> 8080/TCP 17s app=bandicoot
+bandicoot-prod ClusterIP 10.96.199.5 <none> 8080/TCP 8h app=bandicoot-prod
+be-default ClusterIP 10.96.77.24 <none> 8080/TCP 2m16s app=be-default
+kubernetes ClusterIP 10.96.0.1 <none> 443/TCP 7d6h <none>
+
+junho@junho-System-Product-Name:~$ sudo kubectl get ingress
+NAME CLASS HOSTS ADDRESS PORTS AGE
+simple-ingress <none> hello-world.example 80 2m41s
+
+junho@junho-System-Product-Name:~$ sudo kubectl describe ingress simple-ingress
+Name: simple-ingress
+Labels: <none>
+Namespace: default
+Address:
+Ingress Class: <none>
+Default backend: <default>
+Rules:
+Host Path Backends
+
+---
+
+hello-world.example
+/ alpaca:8080 (10.244.0.27:8080,10.244.0.28:8080,10.244.0.29:8080)
+Annotations: nginx.ingress.kubernetes.io/rewrite-target: /$1
+Events: <none>
+
+junho@junho-System-Product-Name:~$ sudo kubectl apply -f host-ingress.yaml
+ingress.networking.k8s.io/host-ingress created
