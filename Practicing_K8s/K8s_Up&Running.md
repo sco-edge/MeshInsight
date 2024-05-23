@@ -322,3 +322,36 @@ Events: <none>
 
 junho@junho-System-Product-Name:~$ sudo kubectl apply -f host-ingress.yaml
 ingress.networking.k8s.io/host-ingress created
+
+junho@junho-System-Product-Name:~$ sudo kubectl describe rs kuard
+Name: kuard
+Namespace: default
+Selector: app=kuard
+Labels: app=kuard
+version=2
+Annotations: <none>
+Replicas: 4 current / 4 desired
+Pods Status: 4 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+Labels: app=kuard
+Containers:
+kuard:
+Image: gcr.io/kuar-demo/kuard-amd64:green
+Port: <none>
+Host Port: <none>
+Environment: <none>
+Mounts: <none>
+Volumes: <none>
+Events:
+Type Reason Age From Message
+
+---
+
+Normal SuccessfulCreate 19m replicaset-controller Created pod: kuard-hv4dm
+Normal SuccessfulCreate 6m39s replicaset-controller Created pod: kuard-5hprk
+Normal SuccessfulCreate 6m39s replicaset-controller Created pod: kuard-9bns9
+Normal SuccessfulCreate 6m39s replicaset-controller Created pod: kuard-slftw
+
+$ sudo kubectl get hpa
+NAME REFERENCE TARGETS MINPODS MAXPODS REPLICAS AGE
+kuard ReplicaSet/kuard <unknown>/80% 2 5 4 2m4s
