@@ -21,6 +21,6 @@ TypeError: kwargs_from_env() got an unexpected keyword argument 'ssl_version'
 That’s because the install script is pushing/installing an obsolete version of docker-compose and the system gets confused because docker ships with an updated version of it by default
 I was able to fix it from my side by doing
 
-pip remove docker-compose
-apt reinstall docker-compose-plugin
-curl -L https://umbrel.sh | bash -s -- --no-install-docker --no-install-compose
+pip remove docker-compose (sudo apt-get remove docker-compose)
+apt reinstall docker-compose
+(curl -L https://umbrel.sh | bash -s -- --no-install-docker --no-install-compose)
