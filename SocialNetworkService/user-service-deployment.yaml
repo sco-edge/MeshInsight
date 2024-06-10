@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: user-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: user-service
+    template:
+        metadata:
+            labels:
+                app: user-service
+        spec:
+            containers:
+                - name: user-service
+                  image: socialnetwork/user-service:latest
+                  ports:
+                      - containerPort: 8080
+                  env:
+                      - name: MYSQL_SERVICE_HOST
+                        value: "mysql"
+                      - name: MYSQL_SERVICE_PORT
+                        value: "3306"
